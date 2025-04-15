@@ -1,0 +1,49 @@
+@model List<MusicApp2.Models.MusicTrack>
+@{
+    ViewData["Title"] = "My Tracks";
+}
+
+<div class="container mt-4">
+    <h2>My Tracks</h2>
+    
+    @if (Model.Any())
+    {
+            <div class="row mt-4">
+                @foreach (var track in Model)
+                {
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">@track.Title</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">@track.ArtistName</h6>
+                                    <p class="card-text">
+                                        <small class="text-muted">Uploaded: @track.UploadDate.ToString("MMM dd, yyyy")</small>
+                                    </p>
+                                    @if (track.IsCopyrighted)
+                                    {
+                                            <div class="alert alert-warning">
+                                                <strong>Copyright Detected!</strong>
+                                                <p>@track.CopyrightDetails</p>
+                                            </div>
+                                    }
+                                    else
+                                    {
+                                            <div class="alert alert-success">
+                                                No copyright issues detected
+                                            </div>
+                                    }
+                                    <a href="@track.FilePath" class="btn btn-primary btn-sm" target="_blank">Listen</a>
+                                    <a asp-action="Details" asp-route-id="@track.Id" class="btn btn-info btn-sm">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                }
+            </div>
+    }
+    else
+    {
+            <div class="alert alert-info mt-4">
+                You haven't uploaded any tracks yet. <a asp-action="Upload">Upload your first track</a>.
+            </div>
+    }
+</div> 

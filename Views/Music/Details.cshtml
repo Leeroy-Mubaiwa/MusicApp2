@@ -1,0 +1,55 @@
+@model MusicApp2.Models.MusicTrack
+@{
+    ViewData["Title"] = "Track Details";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>@Model.Title</h2>
+            <h4 class="text-muted">by @Model.ArtistName</h4>
+            
+            <div class="mt-4">
+                <audio controls class="w-100">
+                    <source src="@Model.FilePath" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            
+            <div class="mt-4">
+                <h5>Copyright Status</h5>
+                @if (Model.IsCopyrighted)
+                {
+                        <div class="alert alert-warning">
+                            <strong>Copyright Detected!</strong>
+                            <p>@Model.CopyrightDetails</p>
+                        </div>
+                }
+                else
+                {
+                        <div class="alert alert-success">
+                            No copyright issues detected
+                        </div>
+                }
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Request Collaboration</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="RequestCollaboration" method="post">
+                        <input type="hidden" name="trackId" value="@Model.Id" />
+                        <div class="form-group mb-3">
+                            <label for="message">Your Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

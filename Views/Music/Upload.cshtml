@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Upload Track";
+}
+
+<div class="container mt-4">
+    <h2>Upload New Track</h2>
+    
+    <form asp-action="Upload" method="post" enctype="multipart/form-data" class="mt-4">
+        <div class="form-group mb-3">
+            <label for="title">Track Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="artistName">Artist Name</label>
+            <input type="text" class="form-control" id="artistName" name="artistName" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="file">Audio File</label>
+            <input type="file" class="form-control" id="file" name="file" accept="audio/*" required>
+            <small class="form-text text-muted">Supported formats: MP3, WAV, M4A</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Upload Track</button>
+    </form>
+</div> 

@@ -1,0 +1,58 @@
+@model List<MusicApp2.Models.CollaborationRequest>
+@{
+    ViewData["Title"] = "Collaboration Requests";
+}
+
+<div class="container mt-4">
+    <h2>Collaboration Requests</h2>
+    
+    @if (Model.Any())
+    {
+            <div class="row mt-4">
+                @foreach (var request in Model)
+                {
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Request for Track #@request.TrackId</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">@request.RequestMessage</p>
+                                    <p class="text-muted">
+                                        <small>Requested on: @request.RequestDate.ToString("MMM dd, yyyy")</small>
+                                    </p>
+                            
+                                    @if (!request.IsApproved)
+                                    {
+                                            <form asp-action="RespondToRequest" method="post" class="mt-3">
+                                                <input type="hidden" name="requestId" value="@request.Id" />
+                                                <div class="form-group mb-3">
+                                                    <label for="responseMessage">Your Response</label>
+                                                    <textarea class="form-control" id="responseMessage" name="responseMessage" rows="3" required></textarea>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button type="submit" name="isApproved" value="true" class="btn btn-success">Approve</button>
+                                                    <button type="submit" name="isApproved" value="false" class="btn btn-danger">Reject</button>
+                                                </div>
+                                            </form>
+                                    }
+                                    else
+                                    {
+                                            <div class="alert @(request.IsApproved ? "alert-success" : "alert-danger")">
+                                                <strong>@(request.IsApproved ? "Approved" : "Rejected")</strong>
+                                                <p>@request.ResponseMessage</p>
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                }
+            </div>
+    }
+    else
+    {
+            <div class="alert alert-info mt-4">
+                You don't have any collaboration requests at the moment.
+            </div>
+    }
+</div> 

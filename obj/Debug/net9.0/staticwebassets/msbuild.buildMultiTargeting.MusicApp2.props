@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MusicApp2.props" />
+</Project>

@@ -1,0 +1,57 @@
+@model List<MusicApp2.Models.CollaborationRequest>
+@{
+    ViewData["Title"] = "Sent Requests";
+}
+
+<div class="container mt-4">
+    <h2>Sent Collaboration Requests</h2>
+    
+    @if (Model.Any())
+    {
+            <div class="row mt-4">
+                @foreach (var request in Model)
+                {
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Request for Track #@request.TrackId</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">@request.RequestMessage</p>
+                                    <p class="text-muted">
+                                        <small>Sent on: @request.RequestDate.ToString("MMM dd, yyyy")</small>
+                                    </p>
+                            
+                                    @if (request.IsApproved)
+                                    {
+                                            <div class="alert alert-success">
+                                                <strong>Approved</strong>
+                                                <p>@request.ResponseMessage</p>
+                                            </div>
+                                    }
+                                    else if (!string.IsNullOrEmpty(request.ResponseMessage))
+                                    {
+                                            <div class="alert alert-danger">
+                                                <strong>Rejected</strong>
+                                                <p>@request.ResponseMessage</p>
+                                            </div>
+                                    }
+                                    else
+                                    {
+                                            <div class="alert alert-info">
+                                                Pending response from the track owner
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                }
+            </div>
+    }
+    else
+    {
+            <div class="alert alert-info mt-4">
+                You haven't sent any collaboration requests yet.
+            </div>
+    }
+</div> 
